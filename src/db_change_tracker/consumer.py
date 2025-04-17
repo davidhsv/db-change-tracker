@@ -49,8 +49,11 @@ def format_timestamp_ms(ts_ms):
     try:
         ts_ms = int(ts_ms)
         if ts_ms < -62135596800000: return f"<{ts_ms} ms (Pre-Epoch)>"
-        dt = datetime.fromtimestamp(ts_ms / 1000.0)
-        return dt.strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
+        # Use UTC to avoid local timezone conversion
+        dt = datetime.utcfromtimestamp(ts_ms / 1000.0)
+        # Format to milliseconds precision and append UTC indicator
+        ts_str = dt.strftime("%Y-%m-%d %H:%M:%S.%f")[:-3] + " UTC"
+        return ts_str
     except (ValueError, TypeError, OverflowError) as e:
         logger.debug(f"Timestamp MS format error for {ts_ms}: {e}")
         return str(ts_ms)
@@ -61,9 +64,11 @@ def format_timestamp_us(ts_us):
         if ts_us < -62135596800000000: return f"<{ts_us} µs (Pre-Epoch)>"
         seconds = ts_us // 1_000_000
         microseconds = ts_us % 1_000_000
-        dt = datetime.fromtimestamp(seconds)
+        # Use UTC to avoid local timezone conversion
+        dt = datetime.utcfromtimestamp(seconds)
         dt_with_micros = dt.replace(microsecond=microseconds)
-        return dt_with_micros.strftime("%Y-%m-%d %H:%M:%S.%f")
+        # Append UTC indicator
+        return dt_with_micros.strftime("%Y-%m-%d %H:%M:%S.%f") + " UTC"
     except (ValueError, TypeError, OverflowError) as e:
         logger.debug(f"Timestamp US format error for {ts_us}: {e}")
         return str(ts_us)
@@ -75,10 +80,12 @@ def format_timestamp_ns(ts_ns):
         seconds = ts_ns // 1_000_000_000
         nanos_remainder = ts_ns % 1_000_000_000
         microseconds = nanos_remainder // 1000
-        dt = datetime.fromtimestamp(seconds)
+        # Use UTC to avoid local timezone conversion
+        dt = datetime.utcfromtimestamp(seconds)
         dt_with_micros = dt.replace(microsecond=microseconds)
         extra_info = f" (ns truncated: {nanos_remainder % 1000})" if nanos_remainder % 1000 else ""
-        return dt_with_micros.strftime(f"%Y-%m-%d %H:%M:%S.%f") + extra_info
+        # Append UTC indicator before any extra info
+        return dt_with_micros.strftime(f"%Y-%m-%d %H:%M:%S.%f") + " UTC" + extra_info
     except (ValueError, TypeError, OverflowError) as e:
         logger.debug(f"Timestamp NS format error for {ts_ns}: {e}")
         return str(ts_ns)
