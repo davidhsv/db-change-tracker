@@ -1,0 +1,26 @@
+[project]
+name = "db-change-tracker"
+version = "0.1.0"
+description = "Standalone tool to track DB changes using Debezium, Kafka (via Docker), and a Python consumer."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [
+    { name = "David Vieira", email = "davidhsv@gmail.com" },
+]
+dependencies = [
+    "python-on-whales>=0.70.0",
+    "requests>=2.30.0",
+    "kafka-python>=2.0.0",
+    "colorama>=0.4.6",
+    "customtkinter>=5.2.0",
+    "psycopg2-binary>=2.9.0",
+    "mysql-connector-python>=8.0.0",
+]
+
+[project.scripts]
+db-change-tracker = "db_change_tracker.main:run_gui"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

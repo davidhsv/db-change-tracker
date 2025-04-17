@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+.eggs/
+
+# Docker (if any local state persists accidentally)
+docker-data/
+zookeeper_data/
+kafka_data/
+
+# IDE specific
+.idea/
+.vscode/
+*.swp
+*~
+
+# uv cache
+.uv_cache/
