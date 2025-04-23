@@ -136,7 +136,7 @@ def start_services() -> bool:
         logger.info(f"Kafka container started: {kafka.id[:12]}")
         # Basic wait for Kafka, more robust check needed if issues arise
         logger.info("Waiting a few seconds for Kafka to initialize...")
-        time.sleep(10)
+        time.sleep(30)
 
         # Start Kafka Connect
         logger.info(f"Starting Kafka Connect ({config.KAFKA_CONNECT_IMAGE})...")

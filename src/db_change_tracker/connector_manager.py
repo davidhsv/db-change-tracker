@@ -5,7 +5,7 @@ from . import config
 
 logger = logging.getLogger(__name__)
 
-def wait_for_connect_ready(timeout_sec=120):
+def wait_for_connect_ready(timeout_sec=240):
     """Waits for the Kafka Connect REST API to become available."""
     logger.info(f"Waiting for Kafka Connect REST API at {config.KAFKA_CONNECT_HEALTH_URL}...")
     start_time = time.time()
